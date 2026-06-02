@@ -2,6 +2,7 @@
 
 import { useEffect } from "react"
 import { useRouter } from "next/navigation"
+import Cookies from "js-cookie"
 
 export default function DashboardLayout({
   children,
@@ -23,9 +24,10 @@ export default function DashboardLayout({
         <span className="font-bold text-xl text-blue-600">Clausify</span>
         <button
           onClick={() => {
-            localStorage.removeItem("access_token")
-            router.push("/login")
-          }}
+  localStorage.removeItem("access_token")
+  Cookies.remove("access_token")
+  window.location.href = "/login"
+}}
           className="text-sm text-slate-500 hover:text-slate-800 transition"
         >
           Déconnexion

@@ -47,6 +47,36 @@ Exigences :
 Génère uniquement le document, sans introduction ni commentaire.`
 }
 
+export async function generateDocumentStream(
+  type: DocumentType,
+  company: CompanyInfo
+): Promise<ReadableStream> {
+  const stream = await client.messages.stream({
+    model: "claude-sonnet-4-5",
+    max_tokens: 4000,
+    messages: [
+      {
+        role: "user",
+        content: getPrompt(type, company),
+      },
+    ],
+  })
+
+  return new ReadableStream({
+    async start(controller) {
+      for await (const chunk of stream) {
+        if (
+          chunk.type === "content_block_delta" &&
+          chunk.delta.type === "text_delta"
+        ) {
+          controller.enqueue(new TextEncoder().encode(chunk.delta.text))
+        }
+      }
+      controller.close()
+    },
+  })
+}
+
 export async function generateDocument(
   type: DocumentType,
   company: CompanyInfo

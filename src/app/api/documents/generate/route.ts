@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import { verifyAccessToken } from "@/lib/jwt"
-import { generateDocument } from "@/lib/claude"
+import { generateDocumentStream } from "@/lib/claude"
 import { db } from "@/lib/db"
 import { documents, companies } from "@/lib/db/schema"
 import { eq } from "drizzle-orm"
@@ -34,34 +34,49 @@ export async function POST(req: NextRequest) {
     if (!existingCompany) {
       const [newCompany] = await db
         .insert(companies)
-        .values({
-          userId: user.userId,
-          ...company,
-        })
+        .values({ userId: user.userId, ...company })
         .returning()
       existingCompany = newCompany
     }
 
-    // Générer le document avec Claude
-    const content = await generateDocument(type, {
+    // Générer le stream
+    const stream = await generateDocumentStream(type, {
       ...company,
       language: company.language || "fr",
     })
 
-    // Sauvegarder en BDD
-    const [document] = await db
-      .insert(documents)
-      .values({
+    // Collecter le contenu complet pour sauvegarder en BDD
+    const [streamForDB, streamForClient] = stream.tee()
+
+    // Sauvegarder en BDD en arrière-plan
+    ;(async () => {
+      const reader = streamForDB.getReader()
+      const decoder = new TextDecoder()
+      let fullContent = ""
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break
+        fullContent += decoder.decode(value)
+      }
+
+      await db.insert(documents).values({
         userId: user.userId,
-        companyId: existingCompany.id,
+        companyId: existingCompany!.id,
         type,
         language: company.language || "fr",
-        content,
+        content: fullContent,
         hasWatermark: true,
       })
-      .returning()
+    })()
 
-    return NextResponse.json({ document }, { status: 201 })
+    return new Response(streamForClient, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Transfer-Encoding": "chunked",
+        "X-Company-Id": existingCompany.id,
+      },
+    })
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Erreur serveur"
     return NextResponse.json({ error: message }, { status: 500 })

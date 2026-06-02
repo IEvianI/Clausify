@@ -68,7 +68,7 @@ export default function DocumentsPage() {
       {docs.length === 0 ? (
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-16 gap-4">
-            <p className="text-slate-500">Aucun document généré pour l'instant</p>
+            <p className="text-slate-500">Aucun document généré pour l&apos;instant</p>
             <Button onClick={() => router.push("/dashboard")}>
               Générer mon premier document
             </Button>

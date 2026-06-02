@@ -65,7 +65,7 @@ export default function UpgradePage() {
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error)
-      window.location.href = data.url
+      router.push(data.url)
     } catch (err) {
       console.error(err)
     } finally {

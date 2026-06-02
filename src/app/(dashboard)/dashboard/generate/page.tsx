@@ -94,7 +94,7 @@ export default function GeneratePage() {
           <CardContent>
             <form onSubmit={handleSubmit} className="flex flex-col gap-4">
               <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Nom de l'entreprise</Label>
+                <Label htmlFor="name">Nom de l&apos;entreprise</Label>
                 <Input
                   id="name"
                   name="name"
@@ -105,7 +105,7 @@ export default function GeneratePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="sector">Secteur d'activité</Label>
+                <Label htmlFor="sector">Secteur d&apos;activité</Label>
                 <Input
                   id="sector"
                   name="sector"
@@ -116,7 +116,7 @@ export default function GeneratePage() {
                 />
               </div>
               <div className="flex flex-col gap-2">
-                <Label htmlFor="activity">Description de l'activité</Label>
+                <Label htmlFor="activity">Description de l&apos;activité</Label>
                 <Input
                   id="activity"
                   name="activity"

@@ -12,7 +12,7 @@ export default function LandingPage() {
           <Button variant="ghost" asChild>
             <Link href="/login">Se connecter</Link>
           </Button>
-          <Button asChild>
+          <Button asChild className="hidden sm:inline-flex">
             <Link href="/register">Commencer gratuitement</Link>
           </Button>
         </div>
@@ -30,7 +30,7 @@ export default function LandingPage() {
         <p className="text-xl text-slate-500 mb-10 max-w-2xl mx-auto">
           CGV, mentions légales, politique de confidentialité — conformes au droit français et au RGPD. Sans avocat, sans effort.
         </p>
-        <div className="flex gap-4 justify-center">
+        <div className="flex gap-4 justify-center flex-wrap px-4">
           <Button size="lg" asChild>
             <Link href="/register">Générer mon premier document</Link>
           </Button>

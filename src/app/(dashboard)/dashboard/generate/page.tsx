@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import { useState } from "react"
 import { useSearchParams, useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -12,10 +13,10 @@ const documentLabels: Record<string, string> = {
   CGV: "Conditions Générales de Vente",
   MENTIONS_LEGALES: "Mentions Légales",
   POLITIQUE_CONFIDENTIALITE: "Politique de Confidentialité",
-  CGVU: "CGV et Conditions d'Utilisation",
+  CGVU: "CGV et Conditions d&apos;Utilisation",
 }
 
-export default function GeneratePage() {
+function GenerateForm() {
   const searchParams = useSearchParams()
   const router = useRouter()
   const type = searchParams.get("type") || "CGV"
@@ -186,5 +187,13 @@ export default function GeneratePage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function GeneratePage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center h-64"><p className="text-slate-500">Chargement...</p></div>}>
+      <GenerateForm />
+    </Suspense>
   )
 }

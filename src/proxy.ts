@@ -4,10 +4,9 @@ import { verifyAccessToken } from "@/lib/jwt"
 const protectedRoutes = ["/dashboard"]
 const authRoutes = ["/login", "/register"]
 
-export function middleware(req: NextRequest) {
+export default function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl
-  const accessToken = req.headers.get("authorization")?.split(" ")[1]
-    ?? req.cookies.get("access_token")?.value
+  const accessToken = req.cookies.get("access_token")?.value
 
   const isProtected = protectedRoutes.some((route) =>
     pathname.startsWith(route)

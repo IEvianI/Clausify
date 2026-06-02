@@ -12,6 +12,14 @@ export default function DashboardPage() {
         <p className="text-slate-500 mt-1">
           Générez vos documents légaux en quelques secondes.
         </p>
+        <div className="mt-4 flex gap-3">
+          <Button asChild variant="outline">
+            <Link href="/dashboard/documents">Mes documents</Link>
+          </Button>
+          <Button asChild variant="outline">
+            <Link href="/dashboard/upgrade">Upgrader mon plan</Link>
+          </Button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

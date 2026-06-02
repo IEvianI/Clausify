@@ -86,7 +86,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             { step: "01", title: "Décrivez votre activité", desc: "Nom, secteur, email — 2 minutes de configuration." },
-            { step: "02", title: "L&apos;IA génère votre document", desc: "Claude AI rédige un document juridique complet et personnalisé." },
+            { step: "02", title: "L'IA génère votre document", desc: "Claude AI rédige un document juridique complet et personnalisé." },
             { step: "03", title: "Téléchargez et utilisez", desc: "Export PDF prêt à publier sur votre site." },
           ].map((s) => (
             <div key={s.step} className="text-center">

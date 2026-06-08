@@ -60,13 +60,19 @@ export async function POST(req: NextRequest) {
         fullContent += decoder.decode(value)
       }
 
+      const existingDocCount = await db
+  .select()
+  .from(documents)
+  .where(eq(documents.userId, user.userId))
+  .then(rows => rows.length)
+
       await db.insert(documents).values({
         userId: user.userId,
         companyId: existingCompany!.id,
         type,
         language: company.language || "fr",
         content: fullContent,
-        hasWatermark: true,
+        hasWatermark: existingDocCount > 0,
       })
     })()
 

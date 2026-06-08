@@ -83,7 +83,7 @@ export async function generateDocument(
 ): Promise<string> {
   const message = await client.messages.create({
     model: "claude-sonnet-4-5",
-    max_tokens: 4000,
+    max_tokens: 16000,
     messages: [
       {
         role: "user",

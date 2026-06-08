@@ -39,6 +39,12 @@ export async function POST(req: NextRequest) {
       existingCompany = newCompany
     }
 
+    const existingDocCount = await db
+  .select()
+  .from(documents)
+  .where(eq(documents.userId, user.userId))
+  .then(rows => rows.length)
+
     // Générer le stream
     const stream = await generateDocumentStream(type, {
       ...company,
@@ -59,12 +65,6 @@ export async function POST(req: NextRequest) {
         if (done) break
         fullContent += decoder.decode(value)
       }
-
-      const existingDocCount = await db
-  .select()
-  .from(documents)
-  .where(eq(documents.userId, user.userId))
-  .then(rows => rows.length)
 
       await db.insert(documents).values({
         userId: user.userId,

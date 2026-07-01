@@ -168,7 +168,7 @@ export default function LandingPage() {
         <h2 className="text-4xl font-bold text-slate-900 mb-4">
           Prêt à générer vos documents ?
         </h2>
-        <p className="text-slate-500 mb-8">Rejoignez des centaines d&apos;entrepreneurs qui font confiance à Clausify</p>
+        <p className="text-slate-500 mb-8">Conçu pour les entrepreneurs et indépendants</p>
         <Button size="lg" asChild>
           <Link href="/register">Commencer gratuitement →</Link>
         </Button>

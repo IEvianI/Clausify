@@ -175,11 +175,6 @@ function GenerateForm() {
 
         {streamedContent && (
           <div className="bg-white border border-slate-200 rounded-lg p-6 overflow-auto max-h-[600px] relative">
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <p className="text-slate-100 text-4xl font-bold rotate-[-35deg] select-none">
-                CLAUSIFY FREE
-              </p>
-            </div>
             <div className="prose prose-slate max-w-none text-sm">
               <ReactMarkdown>{streamedContent}</ReactMarkdown>
             </div>
